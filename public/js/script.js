@@ -30,7 +30,7 @@ socket.on('receiveLocation', (data) => {
     }
     // Optionally, you can center the map on the first user's location
     if (Object.keys(markers).length === 1) {
-        map.setView([latitude, longitude], 15); // Adjust zoom level as needed
+        map.setView([latitude, longitude], 20); // Adjust zoom level as needed
     }
 });
 
