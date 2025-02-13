@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
         });
     });
 
-    // socket.on('disconnect', () => {
-    //     console.log(`User disconnected: ${socket.id}, IP: ${clientIP}`);
+    socket.on('disconnect', () => {
+        console.log(`User disconnected: ${socket.id}, IP: ${clientIP}`);
         io.emit('userDisconnected', socket.id);
     });
 });
