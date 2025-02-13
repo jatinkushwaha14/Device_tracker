@@ -5,17 +5,21 @@ const port = process.env.PORT || 3000;
 const http = require('http');
 const socket = require('socket.io');
 
-const server = http.createServer(app); 
-
+const server = http.createServer(app);
 const io = socket(server);
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', (socket) => {
-    // console.log('a user connected', socket.id);
+    const clientIP = socket.handshake.address; // Get user's IP address
+    const userAgent = socket.handshake.headers['user-agent']; // Get user device info
+
+    // console.log(`User connected: ${socket.id}, IP: ${clientIP}, Device: ${userAgent}`);
 
     socket.on('sendLocation', (data) => {
+        console.log(`Location from ${socket.id} (IP: ${clientIP}, Device: ${userAgent}):`, data);
+
         io.emit('receiveLocation', {
             id: socket.id,
             ...data
@@ -23,15 +27,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
+        console.log(`User disconnected: ${socket.id}, IP: ${clientIP}`);
         io.emit('userDisconnected', socket.id);
-        // console.log('user disconnected', socket.id);
     });
 });
 
 app.get('/', (req, res) => {
-  res.render('index');
-})
+    res.render('index');
+});
 
 server.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+    console.log(`Server running on http://localhost:${port}`);
+});
