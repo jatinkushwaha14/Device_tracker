@@ -15,10 +15,10 @@ io.on('connection', (socket) => {
     const clientIP = socket.handshake.address; // Get user's IP address
     const userAgent = socket.handshake.headers['user-agent']; // Get user device info
 
-    // console.log(`User connected: ${socket.id}, IP: ${clientIP}, Device: ${userAgent}`);
+    console.log(`User connected: ${socket.id}, IP: ${clientIP}, Device: ${userAgent}`);
 
     socket.on('sendLocation', (data) => {
-        console.log(`Location from ${socket.id} (IP: ${clientIP}, Device: ${userAgent}):`, data);
+        // console.log(`Location from ${socket.id} (IP: ${clientIP}, Device: ${userAgent}):`, data);
 
         io.emit('receiveLocation', {
             id: socket.id,
@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
         });
     });
 
-    socket.on('disconnect', () => {
-        console.log(`User disconnected: ${socket.id}, IP: ${clientIP}`);
+    // socket.on('disconnect', () => {
+    //     console.log(`User disconnected: ${socket.id}, IP: ${clientIP}`);
         io.emit('userDisconnected', socket.id);
     });
 });
