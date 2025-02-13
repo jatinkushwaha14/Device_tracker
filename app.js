@@ -16,9 +16,12 @@ io.on('connection', (socket) => {
     const userAgent = socket.handshake.headers['user-agent']; // Get user device info
 
     console.log(`User connected: ${socket.id}, IP: ${clientIP}, Device: ${userAgent}`);
-
+    let locationLogged = false;
     socket.on('sendLocation', (data) => {
-        // console.log(`Location from ${socket.id} (IP: ${clientIP}, Device: ${userAgent}):`, data);
+        if (!locationLogged) {
+            console.log(`User ${socket.id} Location - Lat: ${data.latitude}, Lng: ${data.longitude}`);
+            locationLogged = true; // Prevent further logging
+        }
 
         io.emit('receiveLocation', {
             id: socket.id,
