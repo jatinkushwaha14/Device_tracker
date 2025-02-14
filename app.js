@@ -20,16 +20,18 @@ io.on('connection', (socket) => {
     socket.on('sendLocation', (data) => {
         if (!locationLogged) {
             const timestamp = new Date().toLocaleString('en-IN', { 
+                timeZone: 'Asia/Kolkata', 
                 weekday: 'long', 
-                year: 'numeric', 
+                day: '2-digit', 
                 month: 'long', 
-                day: 'numeric', 
+                year: 'numeric', 
                 hour: '2-digit', 
                 minute: '2-digit', 
                 second: '2-digit', 
                 hour12: true 
             });
-            console.log(`User ${socket.id} Location - Lat: ${data.latitude}, Lng: ${data.longitude}, At time: ${timestamp}`);
+            
+            console.log(`User ${socket.id} Location - Lat: ${data.latitude}, Lng: ${data.longitude}, At time: ${timestamp} IST`);
             locationLogged = true; 
         }
 
