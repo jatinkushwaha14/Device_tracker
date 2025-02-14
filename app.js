@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
     let locationLogged = false;
     socket.on('sendLocation', (data) => {
         if (!locationLogged) {
-            const timestamp = new Date().toLocaleString('en-US', { 
+            const timestamp = new Date().toLocaleString('en-IN', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
