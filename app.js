@@ -19,8 +19,18 @@ io.on('connection', (socket) => {
     let locationLogged = false;
     socket.on('sendLocation', (data) => {
         if (!locationLogged) {
-            console.log(`User ${socket.id} Location - Lat: ${data.latitude}, Lng: ${data.longitude}`);
-            locationLogged = true; // Prevent further logging
+            const timestamp = new Date().toLocaleString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            });
+            console.log(`User ${socket.id} Location - Lat: ${data.latitude}, Lng: ${data.longitude}, At time: ${timestamp}`);
+            locationLogged = true; 
         }
 
         io.emit('receiveLocation', {
